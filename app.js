@@ -7,7 +7,7 @@ const config = require('./config')
 var cors=require('koa2-cors');
 app.use(async (ctx, next) => {
     // 允许来自所有域名请求
-    ctx.set("Access-Control-Allow-Origin", "*");
+    ctx.set("Access-Control-Allow-Origin", ctx.header.origin);
     // 这样就能只允许 http://localhost:8080 这个域名的请求了
     // ctx.set("Access-Control-Allow-Origin", "http://localhost:8080");
  
@@ -54,4 +54,4 @@ app.use(bodyParser())
 const router = require('./routes')
 app.use(router.routes()) // 添加路由中间件
 // 启动程序，监听端口
-app.listen(config.port)
+app.listen(config.port, () => debug(`listening on port ${config.port}`))
