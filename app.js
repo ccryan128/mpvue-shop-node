@@ -5,7 +5,19 @@ const response = require('./middlewares/response')
 const bodyParser = require('koa-bodyparser')
 const config = require('./config')
 var cors=require('koa2-cors');
-app.use(cors({origin:'*'}));
+app.use(cors({
+    origin: function(ctx) {
+      if (ctx.url === '/test') {
+        return false;
+      }
+      return '*';
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  }));
 // 使用响应处理中间件
 app.use(response)
 // 解析请求体
@@ -14,4 +26,4 @@ app.use(bodyParser())
 const router = require('./routes')
 app.use(router.routes()) // 添加路由中间件
 // 启动程序，监听端口
-app.listen(config.port, () => debugcwlibcwlibcwlib(`listening on port ${config.port}`))
+app.listen(config.port, () => debug(`listening on port ${config.port}`))
