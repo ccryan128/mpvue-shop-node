@@ -6,17 +6,16 @@ const bodyParser = require('koa-bodyparser')
 const config = require('./config')
 var cors=require('koa2-cors');
 app.use(cors())
-console.log('1')
+
 // 使用响应处理中间件
 app.use(response)
-console.log('2')
+
 // 解析请求体
 app.use(bodyParser())
-console.log('3')
+
 // 引入路由分发
 const router = require('./routes')
 app.use(router.routes()) // 添加路由中间件
-console.log('4')
+
 // 启动程序，监听端口
-app.listen(config.port, () => debug(`listening on port ${config.port}`,
-console.log('5')))
+app.listen(config.port, () => debug(`listening on port ${config.port}`))
