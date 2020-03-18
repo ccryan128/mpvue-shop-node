@@ -19,7 +19,7 @@ router.get('/index/index',function(ctx,body){
 app.use(cors())
 
 // 使用响应处理中间件
-app.use(response)
+//app.use(response)
 
 // 解析请求体
 app.use(bodyParser())
