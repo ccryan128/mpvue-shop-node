@@ -10,13 +10,7 @@ const controllers = require('../controllers')
 
 //首页数据
 //1.首页
-//router.get('/index/index', controllers.home.index)
-router.get('/index/index',function(ctx,body){
-    console.log('i am');
-    console.log('ctx',ctx)
-    ctx.body='i am ready'
-})
-
+router.get('/index/index', controllers.home.index)
 //2.首页品牌制造商直供的详情内的列表数据
 router.get('/brand/listaction', controllers.brand.index.listAction)
 //3.首页品牌制造商直供的详情数据
