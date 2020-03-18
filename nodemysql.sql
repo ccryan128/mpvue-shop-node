@@ -13,6 +13,9 @@ File Encoding         : 65001
 Date: 2018-08-27 21:43:22
 */
 
+use nodemysql
+set names utf8;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -24,13 +27,20 @@ CREATE TABLE `csessioninfo` (
   `uuid` varchar(100) NOT NULL,
   `skey` varchar(100) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_visit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_visit_time` DATETIME NOT NULL,
   `session_key` varchar(100) NOT NULL,
   `user_info` varchar(2048) NOT NULL,
   PRIMARY KEY (`open_id`),
   KEY `openid` (`open_id`) USING BTREE,
   KEY `skey` (`skey`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TRIGGER IF EXISTS `update_csessioninfo_update`;
+DELIMITER //
+CREATE TRIGGER `update_csessioninfo_update` BEFORE UPDATE ON `csessioninfo`
+ FOR EACH ROW SET NEW.`last_visit_time` = NOW()
+//
+DELIMITER ;
 
 -- ----------------------------
 -- Records of csessioninfo
